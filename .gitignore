@@ -1,0 +1,7 @@
+.vs_code
+.DS_STORE
+bin
+bin-int
+Makefile
+vendor/glad/Makefile
+vendor/stb_image/Makefile

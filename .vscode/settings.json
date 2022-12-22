@@ -1,0 +1,46 @@
+{
+    "files.associations": {
+        "stdio.h": "c",
+        "window.h": "c",
+        "shader.h": "c",
+        "core.h": "c",
+        "iosfwd": "cpp",
+        "renderer.h": "c",
+        "camera.h": "c",
+        "__locale": "c",
+        "atomic": "c",
+        "cstddef": "c",
+        "filesystem": "c",
+        "ios": "c",
+        "limits": "c",
+        "locale": "c",
+        "new": "c",
+        "string": "c",
+        "type_traits": "c",
+        "variant": "c",
+        "compare": "c",
+        "glcall.h": "c",
+        "__hash_table": "cpp",
+        "__split_buffer": "cpp",
+        "array": "cpp",
+        "bitset": "cpp",
+        "deque": "cpp",
+        "initializer_list": "cpp",
+        "stack": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "chrono": "cpp",
+        "event.h": "c",
+        "graphic.h": "c",
+        "stdexcept": "cpp",
+        "stb_image.h": "c"
+    },
+    "workbench.tree.indent": 15,
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/Users/velu/Projekty/bin/Debug-macosx-ARM64/Fernir",
+            "binaryPath": "/Users/velu/Projekty/bin/Debug-macosx-ARM64/Fernir/Fernir",
+            "binaryArgs": []
+        }
+    ]
+}

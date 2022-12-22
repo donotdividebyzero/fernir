@@ -1,0 +1,36 @@
+{
+    "version": "2.0.0",
+    "command": "bash",
+    "options": {
+        "cwd": "${workspaceRoot}"
+    },
+	"args": [
+        "-c"
+    ],
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "make verbose=1"
+            ],
+            "problemMatcher": [],
+            "group": {
+                "_id": "build",
+                "isDefault": false
+            }
+        },
+        {
+            "label": "premake",
+            "type": "shell",
+            "command": "bash",
+            "args": [
+                "-c",
+                "./build.sh"
+            ],
+            "problemMatcher": []
+        }
+    ]
+}
