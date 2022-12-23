@@ -13,8 +13,8 @@ Game *game = nullptr;
 Window WindowConfig()
 {
     Window window;
-    window.width = 800;
-    window.height = 600;
+    window.width = 1280;
+    window.height = 720;
     window.vsync = 1;
     window.title = "Fernir";
 
@@ -34,7 +34,7 @@ void GameKeyCallback(int key, int action, int modes) {
 void CreateApplication(Window *window)
 {
     game = new Game();
-    CameraCreate(window, CAMERA_PERSPECTIVE);
+    CameraCreate(window, CAMERA_PERSPECTIVE, 2.5f);
     EventRegisterKeyCallback(GameKeyCallback);
 }
 

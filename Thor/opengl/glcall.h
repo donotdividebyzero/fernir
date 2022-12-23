@@ -3,6 +3,7 @@
 
 #include <glad/glad.h>
 #include "Thor/core.h"
+#include <stdio.h>
 
 static void glClearError()
 {

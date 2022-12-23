@@ -1,8 +1,8 @@
 #include "texture.h"
 
-#include "stb_image.h"
+#include "Thor/opengl/texture.h"
 
-Texture2d LoadTexture(const char*file_path)
+Texture2d LoadTexture(const char* file_path)
 {
-    
+    return OpenGLLoadTexture(file_path);
 }

@@ -4,6 +4,7 @@
 
 #include <glad/glad.h>
 #include <assert.h>
+#include <stdlib.h>
 
 unsigned int m_OpenGLCompileShader(const char* file_name, unsigned int type)
 {
@@ -39,12 +40,10 @@ unsigned int m_OpenGLCompileShader(const char* file_name, unsigned int type)
         return 0;
     }
 
-    //glDeleteShader(shader);
-
     return shader;
 }
 
-Shader OpenGLCreateShader(const char *vertex, const char *fragment)
+Shader OpenGLCreateShader(const char *vertex, const char *fragment, Textures *textures)
 {
     unsigned int vertex_shader = m_OpenGLCompileShader(vertex, GL_VERTEX_SHADER);
     unsigned int fragment_shader = m_OpenGLCompileShader(fragment, GL_FRAGMENT_SHADER);
@@ -61,8 +60,16 @@ Shader OpenGLCreateShader(const char *vertex, const char *fragment)
         glGetProgramInfoLog(program, 1024, NULL, infoLog);
         fprintf(stderr, "[OpenGl]: %s\n", infoLog);
     }
+    
+    Shader shader = (Shader){program};
 
-    return (Shader){program};
+    for(size_t i=0; i < textures->count;i++) {
+        char* textureName = alloca(sizeof(char)*10);
+        sprintf(textureName, "m_Texture%zu", i);
+        OpenGLSetUniform1i(&shader, textureName, i);
+    }
+
+    return shader;
 }
 
 int m_OpenGLGetShaderUniformLocation(Shader *shader, const char *uniform_name)
@@ -86,6 +93,13 @@ void OpenGLSetUniformMat4(Shader *shader, const char*uniform, mat4 value)
     OpenGLBindShader(shader);
     int uniform_location = m_OpenGLGetShaderUniformLocation(shader, uniform);
     glCall(glUniformMatrix4fv(uniform_location, 1, GL_FALSE, &value[0][0]));
+}
+
+void OpenGLSetUniform1i(Shader *shader, const char* uniform, int value)
+{
+    OpenGLBindShader(shader);
+    int uniform_location = m_OpenGLGetShaderUniformLocation(shader, uniform);
+    glCall(glUniform1i(uniform_location, value));
 }
 
 void OpenGLBindShader(Shader *shader)

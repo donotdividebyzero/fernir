@@ -33,7 +33,15 @@
         "event.h": "c",
         "graphic.h": "c",
         "stdexcept": "cpp",
-        "stb_image.h": "c"
+        "stb_image.h": "c",
+        "__bit_reference": "c",
+        "__node_handle": "c",
+        "__memory": "c",
+        "optional": "c",
+        "ratio": "c",
+        "system_error": "c",
+        "tuple": "c",
+        "timer.h": "c"
     },
     "workbench.tree.indent": 15,
     "makefile.launchConfigurations": [

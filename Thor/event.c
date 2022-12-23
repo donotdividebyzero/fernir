@@ -101,7 +101,26 @@ void EventRegisterWindowSetFrameBufferSizeCallback(WindowSetFrameBufferSizeCallb
 
 void m_WindowSetFrameBufferSizeCallback(GLFWwindow* window, int width, int height)
 {
+    for(size_t i=0;i<WindowSetFrameBufferSizeCallbackEventsCount;i++) {
+        WindowSetFrameBufferSizeCallback callback = WindowSetFrameBufferSizeCallbackEvents[i];
+        callback(width, height);
+    }
+}
 
+MousePosCallback MousePosCallbackEvents[MAX_EVENT_SIZE_ARRAY];
+size_t MousePosCallbackEventsCount = 0;
+
+void EventRegisterMousePosCallback(MousePosCallback callback)
+{
+    MousePosCallbackEvents[MousePosCallbackEventsCount++] = callback;
+}
+
+void m_MousePosCallback(GLFWwindow* window, double xpos, double ypos)
+{
+        for(size_t i=0;i<MousePosCallbackEventsCount;i++) {
+        MousePosCallback callback = MousePosCallbackEvents[i];
+        callback(xpos, ypos);
+    }
 }
 
 void EventInitialize(GLFWwindow *window) 
@@ -111,6 +130,7 @@ void EventInitialize(GLFWwindow *window)
     glfwSetFramebufferSizeCallback(window, m_WindowSetFrameBufferSizeCallback);
     glfwSetMouseButtonCallback(window, m_MouseButtonCallback);
     glfwSetScrollCallback(window, m_MouseScrollCallback);
+    glfwSetCursorPosCallback(window, m_MousePosCallback);  
 }
 
 void EventDeinitialize()

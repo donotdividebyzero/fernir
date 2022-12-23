@@ -9,6 +9,7 @@ typedef float Timestep;
 
 Timestep GetTimeStep();
 
+float GetTime();
 
 #ifdef __cplusplus
 }

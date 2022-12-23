@@ -15,6 +15,12 @@ void m_WindowWindowResizeEvent(int width, int height)
     }
 }
 
+void m_WindowKeyCallback(int key, int action, int modes) {
+    if (key == GLFW_KEY_ESCAPE) {
+        glfwSetWindowShouldClose(s_NativeWindow, 1);
+    }
+}
+
 void error_handler(int error, const char* description)
 {
     (void)error;
@@ -68,10 +74,13 @@ void WindowInitialize(Window *window)
         glfwSwapInterval(1);
     }
 
+    glfwSetInputMode(s_NativeWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);  
+
     glfwGetFramebufferSize(s_NativeWindow, &window->width, &window->height);
     GraphicApiInitialize(window);
     EventInitialize(s_NativeWindow);
     EventRegisterWindowSetFrameBufferSizeCallback(m_WindowWindowResizeEvent);
+    EventRegisterKeyCallback(m_WindowKeyCallback);
 }
 
 void WindowUpdate()

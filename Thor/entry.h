@@ -15,7 +15,6 @@ int main(void) {
     Timestep ts;
     while (!WindowShouldClose()) {
         ts = GetTimeStep();
-
         CameraUpdate(ts);
         RenderApplication(&window, ts);
         WindowUpdate();

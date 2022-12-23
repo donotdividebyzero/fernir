@@ -17,7 +17,7 @@ typedef enum {
 
 void GetCameraViewProjection(mat4 dest);
 
-void CameraCreate(Window *, CameraType);
+void CameraCreate(Window *, CameraType, float);
 
 void CameraDestroy();
 
