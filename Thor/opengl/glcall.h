@@ -32,4 +32,8 @@ static int glCheckError(const char* function, const char* file, int line)
     ASSERT(!glCheckError(#x, __FILE__, __LINE__));\
     return res
 
+#define glCallValue(x, name, T) glClearError();\
+    T name = x;\
+    ASSERT(!glCheckError(#x, __FILE__, __LINE__));\
+
 #endif 

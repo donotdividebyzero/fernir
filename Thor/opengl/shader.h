@@ -3,7 +3,8 @@
 Shader OpenGLCreateShader(const char *, const char *, Textures *);
 
 void OpenGLSetUniformMat4(Shader *, const char*, mat4);
-void OpenGLSetUniform1i(Shader *, const char*, int);
+void OpenGLSetUniformInt(Shader *, const char*, int);
+void OpenGLSetUniformVec3(Shader *, const char*, vec3);
 
 void OpenGLBindShader(Shader *);
 

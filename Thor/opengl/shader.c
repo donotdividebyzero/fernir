@@ -56,17 +56,19 @@ Shader OpenGLCreateShader(const char *vertex, const char *fragment, Textures *te
     int success;
     glGetProgramiv(program, GL_LINK_STATUS, &success);
     if (!success) {
-        GLchar infoLog[1024];
-        glGetProgramInfoLog(program, 1024, NULL, infoLog);
+        GLchar infoLog[512];
+        glGetProgramInfoLog(program, 512, NULL, infoLog);
         fprintf(stderr, "[OpenGl]: %s\n", infoLog);
     }
     
     Shader shader = (Shader){program};
 
-    for(size_t i=0; i < textures->count;i++) {
-        char* textureName = alloca(sizeof(char)*10);
-        sprintf(textureName, "m_Texture%zu", i);
-        OpenGLSetUniform1i(&shader, textureName, i);
+    if (textures != NULL) {
+        for(size_t i=0; i < textures->count;i++) {
+            char* textureName = alloca(sizeof(char)*10);
+            sprintf(textureName, "m_Texture%zu", i);
+            OpenGLSetUniformInt(&shader, textureName, i);
+        }
     }
 
     return shader;
@@ -95,11 +97,18 @@ void OpenGLSetUniformMat4(Shader *shader, const char*uniform, mat4 value)
     glCall(glUniformMatrix4fv(uniform_location, 1, GL_FALSE, &value[0][0]));
 }
 
-void OpenGLSetUniform1i(Shader *shader, const char* uniform, int value)
+void OpenGLSetUniformInt(Shader *shader, const char* uniform, int value)
 {
     OpenGLBindShader(shader);
     int uniform_location = m_OpenGLGetShaderUniformLocation(shader, uniform);
     glCall(glUniform1i(uniform_location, value));
+}
+
+void OpenGLSetUniformVec3(Shader* shader, const char* name, vec3 v)
+{
+    OpenGLBindShader(shader);
+    int uniform_location = m_OpenGLGetShaderUniformLocation(shader, name);
+    glCall(glUniform3f(uniform_location, v[0], v[1], v[2]));
 }
 
 void OpenGLBindShader(Shader *shader)

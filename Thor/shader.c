@@ -14,9 +14,14 @@ void SetUniformMat4(Shader *shader, const char*name, mat4 v)
     OpenGLSetUniformMat4(shader, name, v);
 }
 
-void SetUniform1i(Shader* shader, const char* name, int value)
+void SetUniformInt(Shader* shader, const char* name, int value)
 {
-    OpenGLSetUniform1i(shader, name, value);
+    OpenGLSetUniformInt(shader, name, value);
+}
+
+void SetUniformVec3(Shader* shader, const char* name, vec3 value)
+{
+    OpenGLSetUniformVec3(shader, name, value);
 }
 
 void BindShader(Shader *shader)

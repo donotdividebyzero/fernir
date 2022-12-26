@@ -2,7 +2,7 @@
 
 #include "Thor/opengl/texture.h"
 
-Texture2d LoadTexture(const char* file_path)
+Texture2d CreateTexture(const char* file_path)
 {
-    return OpenGLLoadTexture(file_path);
+    return OpenGLCreateTexture(file_path);
 }

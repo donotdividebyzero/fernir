@@ -1,8 +1,20 @@
-#include "Thor/renderer.h"
+#include "renderer.h"
 
 #include "Thor/opengl/renderer.h"
 
-void RenderCommand(Mesh *mesh)
+#include "Thor/renderable.h"
+
+void BeginDraw()
 {
-    OpenGLRenderCommand(mesh);
+    OpenGLStartDraw();
+}
+
+void EndDraw()
+{
+    OpenGLEndDraw();
+}
+
+void Submit(Renderable *obj)
+{
+    OpenGLDraw(obj);
 }

@@ -7,7 +7,7 @@
 
 typedef unsigned int Texture2d;
 
-Texture2d LoadTexture(const char*);
+Texture2d CreateTexture(const char*);
 
 #ifdef __cplusplus
     }

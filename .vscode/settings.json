@@ -41,7 +41,13 @@
         "ratio": "c",
         "system_error": "c",
         "tuple": "c",
-        "timer.h": "c"
+        "timer.h": "c",
+        "texture.h": "c",
+        "renderable.h": "c",
+        "cglm.h": "c",
+        "mesh.h": "c",
+        "typeinfo": "c",
+        "complex": "c"
     },
     "workbench.tree.indent": 15,
     "makefile.launchConfigurations": [

@@ -20,7 +20,8 @@ typedef struct {
 Shader CreateShader(const char *, const char *, Textures *);
 
 void SetUniformMat4(Shader *, const char*, mat4);
-void SetUniform1i(Shader *, const char*, int);
+void SetUniformInt(Shader *, const char*, int);
+void SetUniformVec3(Shader *, const char*, vec3);
 void BindShader(Shader *);
 void UnbindShader(Shader *);
 void DeleteShader(Shader *);

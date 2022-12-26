@@ -1,101 +1,56 @@
-#include "Thor/renderer.h"
 #include "renderer.h"
+#include "mesh.h"
+#include "Thor/shader.h"
 
 #include <glad/glad.h>
 
 #include "Thor/camera.h"
-
 #include "glcall.h"
-
 #include <cglm/cglm.h>
 
-typedef struct {
-    GLuint vao, ibo, vbo;
-    GLuint shader;
-    GLuint textId;
-} VertexArray;
+#include "Thor/renderable.h"
 
-#define MAX_VAO_ARRAYS 5000
-
-VertexArray vaos[MAX_VAO_ARRAYS];
-
-void OpenGLRendererDestruct()
+void OpenGLDraw(Renderable *obj)
 {
-    for(size_t i=0; i<MAX_VAO_ARRAYS;i++)
-    {
-        VertexArray *va = &vaos[i];
-        if (va->vao) {
-            glCall(glDeleteVertexArrays(1, &va->vao));
-            glCall(glDeleteBuffers(1, &va->vbo));
-        }
-    }
-}
-
-void OpenGLRenderCommand(Mesh *mesh)
-{
-    if (!mesh->id) {
-        GLuint vao, ibo, vbo;
-        glCall(glGenVertexArrays(1, &vao));
-        glCall(glBindVertexArray(vao));
-
-        glCall(glGenBuffers(1, &vbo));
-        glCall(glBindBuffer(GL_ARRAY_BUFFER, vbo));
-        glCall(glBufferData(GL_ARRAY_BUFFER, mesh->verticies.size, mesh->verticies.data, GL_STATIC_DRAW));
-
-        if (mesh->indicies.count > 0) {
-            glCall(glGenBuffers(1, &ibo));
-            glCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
-            glCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->indicies.size, mesh->indicies.data, GL_STATIC_DRAW));
-            glCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
-        } else {
-            ibo = 0;
-        }
-     
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
-
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(3*sizeof(float)));
-
-        mesh->id = vao;
-        vaos[mesh->id] = (VertexArray){vao, ibo, vbo, mesh->shader.id};
-        glCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
-        glCall(glBindVertexArray(0));
+    struct GraphicData *data = obj->mesh->graphic_data;
+    if (data == NULL) {
+        return;
     }
 
-    glCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-    VertexArray *va = &vaos[mesh->id];
-    for(size_t i=0;i<2;i++) {
-        if (mesh->textures[i] != 0) {
-            int textureUnit = GL_TEXTURE0+(mesh->textures[i]-1);
+    for(size_t i=0;i<obj->textures.count;i++) {
+        if (obj->textures.data[i] != 0) {
+            int textureUnit = GL_TEXTURE0+(obj->textures.data[i]-1);
             glCall(glActiveTexture(textureUnit));
-            glCall(glBindTexture(GL_TEXTURE_2D, mesh->textures[i]));
+            glCall(glBindTexture(GL_TEXTURE_2D, obj->textures.data[i]));
         }
     }
     
-    glCall(glBindVertexArray(va->vao));
-    glCall(glBindBuffer(GL_ARRAY_BUFFER, va->vbo));
-    if (va->ibo > 0) {
-        glCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, va->ibo));
+    glCall(glBindVertexArray(data->vao));
+    if (obj->mesh->indicies.count > 0) {
+        glCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, data->ibo));
     }
 
-    glCall(glUseProgram(va->shader));
+    glCall(glUseProgram(obj->shader->id));
 
     mat4 proj;
     GetCameraViewProjection(proj);
-    int uniform_location = glGetUniformLocation(va->shader, "proj");
-    glCall(glUniformMatrix4fv(uniform_location, 1, GL_FALSE, &proj));
+    SetUniformMat4(obj->shader, "proj", proj);
+    SetUniformMat4(obj->shader, "model", obj->position);
 
-    for(size_t i=0; i < mesh->positions.count; i++) {
-        int model_loc = glGetUniformLocation(va->shader, "model");
-        glCall(glUniformMatrix4fv(model_loc, 1, GL_FALSE, &mesh->positions.data[i]));
-        
-        if (va->ibo > 0) {
-            glCall(glDrawElements(GL_TRIANGLES, mesh->indicies.count, GL_UNSIGNED_INT, 0));
-        } else {
-            glCall(glDrawArrays(GL_TRIANGLES, 0, mesh->verticies.count));
-        }
+    if (obj->mesh->indicies.count > 0) {
+        glCall(glDrawElements(GL_TRIANGLES, obj->mesh->indicies.count, GL_UNSIGNED_INT, 0));
+    } else {
+        glCall(glDrawArrays(GL_TRIANGLES, 0, obj->mesh->verticies.count));
     }
 
     glCall(glBindVertexArray(0));
+}
+
+void OpenGLStartDraw()
+{
+    glCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
+}
+
+void OpenGLEndDraw()
+{
 }

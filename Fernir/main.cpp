@@ -4,8 +4,6 @@
 #include "Thor/camera.h"
 #include "Thor/event.h"
 
-
-#include "player.h"
 #include "game.h"
 
 Game *game = nullptr;
@@ -36,12 +34,12 @@ void CreateApplication(Window *window)
     game = new Game();
     CameraCreate(window, CAMERA_PERSPECTIVE, 2.5f);
     EventRegisterKeyCallback(GameKeyCallback);
+
 }
 
 void RenderApplication(Window *window, float ts)
 {
     game->GameOnUpdate(ts);
-    RenderCommand(game->GetMesh());
 }
 
 void DestroyApplication()

@@ -1,6 +1,7 @@
 #include "window.h"
 #include "camera.h"
 #include "timer.h"
+#include "renderer.h"
 
 extern Window WindowConfig();
 extern void CreateApplication(Window *);
@@ -15,8 +16,10 @@ int main(void) {
     Timestep ts;
     while (!WindowShouldClose()) {
         ts = GetTimeStep();
+        BeginDraw();
         CameraUpdate(ts);
         RenderApplication(&window, ts);
+        EndDraw();
         WindowUpdate();
     }
 

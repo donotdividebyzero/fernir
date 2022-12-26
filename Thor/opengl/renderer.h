@@ -1,9 +1,12 @@
 #ifndef __THOR_OPENGL_RENDERER_H
 #define __THOR_OPENGL_RENDERER_H
-#include "Thor/renderer.h"
+#include "renderer.h"
+#include "Thor/renderable.h"
 
-void OpenGLRenderCommand(Mesh *);
+void OpenGLDraw(Renderable *);
 
-void OpenGLRendererDestruct();
+void OpenGLStartDraw();
+
+void OpenGLEndDraw();
 
 #endif

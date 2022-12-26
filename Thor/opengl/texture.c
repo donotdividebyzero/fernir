@@ -5,7 +5,7 @@
 #include "stb_image.h"
 
 
-Texture2d OpenGLLoadTexture(const char* file_path) 
+Texture2d OpenGLCreateTexture(const char* file_path) 
 {
     Texture2d texture;
     glCall(glGenTextures(1, &texture));
@@ -13,7 +13,7 @@ Texture2d OpenGLLoadTexture(const char* file_path)
     
     glCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
     glCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
-
+ 
     glCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
     glCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
 

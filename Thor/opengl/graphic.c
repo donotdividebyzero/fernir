@@ -4,7 +4,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "Thor/opengl/renderer.h"
 #include "Thor/opengl/glcall.h"
 
 #include <stdio.h>
@@ -27,5 +26,4 @@ void GraphicApiInitialize(Window *window)
 void GraphicApiDestroy(Window *window) 
 {
     (void)window;
-    OpenGLRendererDestruct();
 }
