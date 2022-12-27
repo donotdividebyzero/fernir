@@ -1,4 +1,4 @@
-#include <Thor/entry.h>
+#include "Thor/entry.h"
 #include "Thor/window.h"
 #include "Thor/renderer.h"
 #include "Thor/camera.h"

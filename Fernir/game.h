@@ -17,8 +17,9 @@ public:
 private:
     unsigned int m_PressedKeys[GLFW_KEY_LAST];
     Cube* m_Light;
-    vec3 m_LightPos;
-    Cube* m_Cube;
     Shader m_LightShader;
+    vec3 m_LightPosition;
+
+    Cube* m_Cube;
     Shader m_CubeShader;
 };

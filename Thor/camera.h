@@ -16,6 +16,7 @@ typedef enum {
 
 
 void GetCameraViewProjection(mat4 dest);
+void GetCameraPosition(vec3 dest);
 
 void CameraCreate(Window *, CameraType, float);
 

@@ -100,6 +100,11 @@ void GetCameraViewProjection(mat4 dest)
     glm_mul(camera.proj, camera.view, dest);
 }
 
+void GetCameraPosition(vec3 dest)
+{
+    glm_vec3_copy(camera.position, dest);
+}
+
 void CameraCreate(Window *window, CameraType type, const float cameraSpeed) 
 {
     mousePosition.isInitiated = 1;

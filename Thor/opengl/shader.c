@@ -1,4 +1,4 @@
-#include <Thor/shader.h>
+#include "Thor/shader.h"
 #include "shader.h"
 #include "glcall.h"
 
@@ -76,39 +76,31 @@ Shader OpenGLCreateShader(const char *vertex, const char *fragment, Textures *te
 
 int m_OpenGLGetShaderUniformLocation(Shader *shader, const char *uniform_name)
 {
-    /**
-     * @TODO: figure out how to cache uniform locations 
-     * 
-     */
-    // for(int i = 0; i<sizeof(shader->UniformLocations); i++) {
-    //     if (strcmp(uniform_name, shader->UniformLocation[i]) == 0)) {
-    //         return i;
-    //     }
-    // }
-    // int uniformLocation = glGetUniformLocation(shader->Id, uniform_name);
-    // shader->UniformLocation[uniformLocation] = uniform_name;
     glCallRet(glGetUniformLocation(shader->id, uniform_name), int);
 }
 
 void OpenGLSetUniformMat4(Shader *shader, const char*uniform, mat4 value) 
 {
-    OpenGLBindShader(shader);
     int uniform_location = m_OpenGLGetShaderUniformLocation(shader, uniform);
-    glCall(glUniformMatrix4fv(uniform_location, 1, GL_FALSE, &value[0][0]));
+    glCall(glUniformMatrix4fv(uniform_location, 1, GL_FALSE, (float*)&(value[0][0])));
 }
 
 void OpenGLSetUniformInt(Shader *shader, const char* uniform, int value)
 {
-    OpenGLBindShader(shader);
     int uniform_location = m_OpenGLGetShaderUniformLocation(shader, uniform);
     glCall(glUniform1i(uniform_location, value));
 }
 
 void OpenGLSetUniformVec3(Shader* shader, const char* name, vec3 v)
 {
-    OpenGLBindShader(shader);
     int uniform_location = m_OpenGLGetShaderUniformLocation(shader, name);
     glCall(glUniform3f(uniform_location, v[0], v[1], v[2]));
+}
+
+void OpenGLSetUniformFloat(Shader* shader, const char* name, float v)
+{
+    int uniform_location = m_OpenGLGetShaderUniformLocation(shader, name);
+    glCall(glUniform1f(uniform_location, (GLfloat)v));
 }
 
 void OpenGLBindShader(Shader *shader)

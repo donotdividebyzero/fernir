@@ -30,12 +30,16 @@ void OpenGLDraw(Renderable *obj)
         glCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, data->ibo));
     }
 
-    glCall(glUseProgram(obj->shader->id));
+    BindShader(obj->shader);
 
-    mat4 proj;
-    GetCameraViewProjection(proj);
-    SetUniformMat4(obj->shader, "proj", proj);
+    mat4 viewProj;
+    GetCameraViewProjection(viewProj);
+    SetUniformMat4(obj->shader, "viewProj", viewProj);
     SetUniformMat4(obj->shader, "model", obj->position);
+
+    vec3 camPos;
+    GetCameraPosition(camPos);
+    SetUniformVec3(obj->shader, "viewPos", camPos);
 
     if (obj->mesh->indicies.count > 0) {
         glCall(glDrawElements(GL_TRIANGLES, obj->mesh->indicies.count, GL_UNSIGNED_INT, 0));
@@ -48,6 +52,7 @@ void OpenGLDraw(Renderable *obj)
 
 void OpenGLStartDraw()
 {
+    glCall(glClearColor(0.1f, 0.1f, 0.1f, 1.0f));
     glCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 }
 
